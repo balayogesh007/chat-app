@@ -31,7 +31,7 @@ export class User {
   password: string;
 
   @Field()
-  @Column({ name: 'unique_id', type: 'uuid' })
+  @Column({ name: 'unique_id' })
   uniqueId: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })

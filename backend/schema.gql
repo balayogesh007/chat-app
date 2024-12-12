@@ -11,12 +11,17 @@ type User {
   uniqueId: String!
 }
 
+type SignInResponse {
+  token: String!
+}
+
 type Socket {
   """Example field (placeholder)"""
   exampleField: Int!
 }
 
 type Query {
+  signIn(emailId: String!, password: String!): SignInResponse!
   users: [User!]!
   user(id: Int!): User!
   socket(id: Int!): Socket!
@@ -32,13 +37,17 @@ type Mutation {
 }
 
 input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  firstName: String!
+  lastName: String!
+  emailId: String!
+  password: String!
 }
 
 input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  firstName: String
+  lastName: String
+  emailId: String
+  password: String
   id: Int!
 }
 
