@@ -1,0 +1,117 @@
+.form-control{
+    width: 350px;
+    height: 600px;
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    transform: translate(-50%, -50%);
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #000000;
+    box-shadow: 5px 5px 10px #abbaab;
+    color: #ffffff;
+  }
+  
+  .form-control-login{
+    width: 350px;
+    height: 400px;
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    transform: translate(-50%, -50%);
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #000000;
+    box-shadow: 5px 5px 10px #abbaab;
+    color: #ffffff;
+  }
+  
+  .input-label-container{
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  align-items: flex-start;
+  }
+  
+  .form-control-login > div{
+      margin-bottom: 1rem;
+  }
+  
+  .form-control > div{
+    margin-bottom: 1rem;
+  }
+  .sign-up-button{
+    margin-bottom: 10px;
+    font-family: 'Fira Sans';
+    font-weight: 500;
+    width: 80px;
+    height: 30px;
+    color: #000000;
+    background-color: #abbaab;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  input{
+    width: 250px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    font-family: 'Fira Sans';
+    font-size: 12px;
+  }
+  
+  input:focus{
+    outline: none;
+  }
+  
+  label{
+    margin-left: 10px;
+  }
+  
+  .form-action-control{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .register-anchor{
+    margin-top: 10px;
+    color: rgb(166, 178, 198);
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .signup-page-image{
+    background-color: black;
+  }
+  
+  .signup-page-container{
+    display: flex;
+    flex-direction: row;
+    background-image: linear-gradient(to right, #abbaab, #ffffff);
+    height: 100vh;
+  }
+  
+  
+  .login-anchor {
+    margin-top: 10px;
+    color: rgb(166, 178, 198);  text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .errorMsg{
+    color: #ff0000;
+    margin-top: 0.5px;
+    font-size: 12px;
+    font-style: italic;
+  }
+  
