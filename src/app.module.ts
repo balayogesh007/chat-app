@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { UsersModule } from './modules/users/users.module';
+import { SocketModule } from './modules/socket/socket.module';
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -22,6 +23,7 @@ import { UsersModule } from './modules/users/users.module';
     }),
     DatabaseModule,
     UsersModule,
+    SocketModule,
   ],
   controllers: [AppController],
   providers: [AppService],

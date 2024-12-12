@@ -11,15 +11,24 @@ type User {
   uniqueId: String!
 }
 
+type Socket {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Query {
   users: [User!]!
   user(id: Int!): User!
+  socket(id: Int!): Socket!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
+  createSocket(createSocketInput: CreateSocketInput!): Socket!
+  updateSocket(updateSocketInput: UpdateSocketInput!): Socket!
+  removeSocket(id: Int!): Socket!
 }
 
 input CreateUserInput {
@@ -28,6 +37,17 @@ input CreateUserInput {
 }
 
 input UpdateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateSocketInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateSocketInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
