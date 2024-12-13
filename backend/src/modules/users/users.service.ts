@@ -15,7 +15,7 @@ import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly userRepo: UsersRepository) {}
+  constructor(private readonly userRepo: UsersRepository) { }
 
   async passwordHash(password: string) {
     try {
@@ -48,7 +48,11 @@ export class UsersService {
       throw new BadRequestException(INCORRECT_PWD);
     }
     const generateToken = jwt.sign(
-      { emailId: emailId, exp: Math.floor(Date.now() / 1000) + 60 * 60 },
+      {
+        emailId: getUser?.emailId,
+        userId: getUser?.uId,
+        exp: Math.floor(Date.now() / 1000) + 60 * 60,
+      },
       'rsa',
     );
     return {

@@ -18,10 +18,10 @@ export const SignInFormComponent = () => {
   
     const [loginUser] = useLazyQuery(SIGN_IN, {
       onCompleted: (data) => {
-        console.log("$$$_________%%%%", data.login.id);
+        console.log("$$$____Login Success_____%%%%");
         //store id to local storage for get user profile from dashboard
-        localStorage.setItem('loginId', data.login.id)
-        navigate('/home')
+        localStorage.setItem('accessToken', data?.signIn?.token)
+        navigate('/chat')
       },
       onError: (err) => {
         console.log(err.message);
@@ -31,7 +31,6 @@ export const SignInFormComponent = () => {
     );
   
     const loginFunctionHandler = (data: any) => {
-      console.log("#####", data);
       loginUser({
         variables: {
           emailId: data.emailid,

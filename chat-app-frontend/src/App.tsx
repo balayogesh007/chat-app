@@ -3,6 +3,7 @@ import './App.css';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { SignInFormComponent } from './components/user-forms/SignInForm';
 import { SignUpFormComponent } from './components/user-forms/SignUpForm';
+import { ChatWindowComponent } from './components/chat-module/ChatWindow/ChatWindow';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Routes>
         <Route path='/' element={<SignInFormComponent/>}></Route>
         <Route path='/register' element={<SignUpFormComponent/>}></Route>
+        <Route path='/chat' element={<ChatWindowComponent/>}></Route>
       </Routes>
     </div>
   );
