@@ -51,6 +51,7 @@ export class UsersService {
       {
         emailId: getUser?.emailId,
         userId: getUser?.uId,
+        userFullName: `${getUser?.firstName} ${getUser?.lastName}`,
         exp: Math.floor(Date.now() / 1000) + 60 * 60,
       },
       'rsa',

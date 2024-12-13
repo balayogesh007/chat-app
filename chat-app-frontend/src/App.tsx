@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { SignInFormComponent } from './components/user-forms/SignInForm';
 import { SignUpFormComponent } from './components/user-forms/SignUpForm';
 import { ChatWindowComponent } from './components/chat-module/ChatWindow/ChatWindow';

@@ -4,7 +4,15 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { SIGN_IN } from '../../queries/users.query';
+import {jwtDecode} from 'jwt-decode';
 
+interface JwtPayloadType{
+  emailId: string,
+  userId: string,
+  userFullName: string,
+  exp: number,
+  iat: number
+}
 
 export const SignInFormComponent = () => {
     const [signInError, setSignInError] = useState('');
@@ -19,8 +27,12 @@ export const SignInFormComponent = () => {
     const [loginUser] = useLazyQuery(SIGN_IN, {
       onCompleted: (data) => {
         console.log("$$$____Login Success_____%%%%");
+        const decodeJwt: JwtPayloadType = jwtDecode(data?.signIn?.token);
         //store id to local storage for get user profile from dashboard
-        localStorage.setItem('accessToken', data?.signIn?.token)
+        console.log("######", decodeJwt)
+        localStorage.setItem('accessToken', data?.signIn?.token);
+        localStorage.setItem('userId', decodeJwt?.userId);
+        localStorage.setItem('fullName', decodeJwt?.userFullName)
         navigate('/chat')
       },
       onError: (err) => {
