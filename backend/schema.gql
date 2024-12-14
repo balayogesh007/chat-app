@@ -2,6 +2,29 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Message {
+  mId: String!
+  message: String!
+  userId: String!
+  user: User!
+  roomId: String!
+  room: Room!
+  createdAt: DateTime
+  deletedAt: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Room {
+  rId: String!
+  roomName: String
+  users: [User!]!
+  messages: [Message!]
+}
+
 type User {
   uId: String!
   firstName: String!
@@ -9,31 +32,33 @@ type User {
   emailId: String!
   password: String!
   uniqueId: String!
+  messages: Message
+  rooms: [Room!]
 }
 
 type SignInResponse {
   token: String!
 }
 
-type Socket {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
 type Query {
   signIn(emailId: String!, password: String!): SignInResponse!
   users: [User!]!
-  user(id: Int!): User!
-  socket(id: Int!): Socket!
+  getUserById(id: String!): User!
+  message(id: Int!): Message!
+  rooms: [Room!]!
+  room(id: Int!): Room!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
-  createSocket(createSocketInput: CreateSocketInput!): Socket!
-  updateSocket(updateSocketInput: UpdateSocketInput!): Socket!
-  removeSocket(id: Int!): Socket!
+  sendMessageInput(sendMessageInput: SendMessageInput!): Message!
+  updateMessage(updateMessageInput: UpdateMessageInput!): Message!
+  removeMessage(id: Int!): Message!
+  createRoom(createRoomInput: CreateRoomInput!): Room!
+  updateRoom(updateRoomInput: UpdateRoomInput!): Room!
+  removeRoom(id: Int!): Room!
 }
 
 input CreateUserInput {
@@ -48,16 +73,28 @@ input UpdateUserInput {
   lastName: String
   emailId: String
   password: String
+  uId: String!
+}
+
+input SendMessageInput {
+  userId: String!
+  roomId: String!
+  message: String!
+}
+
+input UpdateMessageInput {
+  """Example field (placeholder)"""
+  exampleField: Int
   id: Int!
 }
 
-input CreateSocketInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input CreateRoomInput {
+  roomName: String
+  users: [UpdateUserInput!]!
 }
 
-input UpdateSocketInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+input UpdateRoomInput {
+  roomName: String
+  users: [UpdateUserInput!]
   id: Int!
 }

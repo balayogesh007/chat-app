@@ -10,7 +10,7 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { UsersRepository } from './users.repository';
 import * as crypto from 'crypto';
 import * as bcrypt from 'bcrypt';
-import { EMAIL_PWD_REQ, INCORRECT_PWD } from '../../common/error-constants';
+import { EMAIL_PWD_REQ, INCORRECT_PWD, USER_NOT_FOUND } from '../../common/error-constants';
 import * as jwt from 'jsonwebtoken';
 
 @Injectable()
@@ -73,12 +73,24 @@ export class UsersService {
     return `This action returns all users`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async getUserById(id: string) {
+    const getUserDetails = await this.userRepo.findOne({
+      where: { uId: id },
+      relations: ['rooms'],
+    });
+    if (!getUserDetails?.uId) {
+      throw new NotFoundException(USER_NOT_FOUND);
+    }
+    return getUserDetails;
   }
 
-  update(id: number, updateUserInput: UpdateUserInput) {
-    return `This action updates a #${id} user`;
+  async updateUser(id: string, updateUserInput: UpdateUserInput) {
+    const getuser = await this.getUserById(id);
+    if (!getuser?.uId) {
+      throw new NotFoundException(USER_NOT_FOUND)
+    }
+    await this.userRepo.update({ uId: id }, { ...updateUserInput });
+    return this.getUserById(id);
   }
 
   remove(id: number) {

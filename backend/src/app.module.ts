@@ -8,6 +8,8 @@ import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { UsersModule } from './modules/users/users.module';
 import { SocketModule } from './modules/socket/socket.module';
+import { RoomsModule } from './modules/rooms/rooms.module';
+import { MessageModule } from './modules/message/message.module';
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -24,8 +26,10 @@ import { SocketModule } from './modules/socket/socket.module';
     DatabaseModule,
     UsersModule,
     SocketModule,
+    RoomsModule,
+    MessageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

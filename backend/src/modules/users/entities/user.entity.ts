@@ -3,9 +3,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Room } from '../../rooms/entities/room.entity';
+import { Message } from '../../message/entities/message.entity';
 
 @Entity({ name: 'users' })
 @ObjectType()
@@ -31,15 +35,38 @@ export class User {
   password: string;
 
   @Field()
-  @Column({ name: 'unique_id' })
+  @Column({ name: 'unique_id', nullable: true })
   uniqueId: string;
 
-  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
+  @Field(() => Message, { nullable: true })
+  @OneToMany(() => Message, (message) => message?.user, {
+    cascade: true
+  })
+  messages: Message[];
+
+  @Field(() => [Room], { nullable: true })
+  @ManyToMany(() => Room, (room) => room?.users)
+  rooms?: Room[];
+
+  @CreateDateColumn({
+    name: 'created_at',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
   createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
+  @UpdateDateColumn({
+    name: 'updated_at',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
   updatedAt: Date;
 
-  @CreateDateColumn({ name: 'deleted_at', type: 'timestamptz' })
+  @CreateDateColumn({
+    name: 'deleted_at',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    nullable: true,
+  })
   deletedAt: Date;
 }
