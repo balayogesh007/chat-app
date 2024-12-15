@@ -30,30 +30,57 @@ type User {
   firstName: String!
   lastName: String!
   emailId: String!
-  password: String!
+  password: String
+  isSocialLogin: Boolean
   uniqueId: String!
   messages: Message
   rooms: [Room!]
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
 }
 
 type SignInResponse {
   token: String!
 }
 
+type GetAllUsersResponse {
+  totalCount: Int!
+  users: [User!]!
+}
+
+type GetMessagesByRoomAndUserIdRespType {
+  totalCount: Int!
+  messages: [Message!]!
+}
+
+type GetAllRoomsResponseType {
+  totalCount: Int!
+  rooms: [Room!]!
+}
+
 type Query {
   signIn(emailId: String!, password: String!): SignInResponse!
-  users: [User!]!
+  getAllUsers(pageNo: Int!, perPage: Int!, searchText: String!): GetAllUsersResponse!
   getUserById(id: String!): User!
+  getMessageByRoomIdAndUserId(getMessageByRoomAndUserIdInput: GetMessageByRoomAndUserIdInput!): GetMessagesByRoomAndUserIdRespType!
   message(id: Int!): Message!
-  rooms: [Room!]!
-  room(id: Int!): Room!
+  getAllRooms(pageNo: Int!, perPage: Int!): GetAllRoomsResponseType!
+  getRoomByRoomId(id: String!): Room!
+}
+
+input GetMessageByRoomAndUserIdInput {
+  roomId: String!
+  userId: String!
+  pageNo: Int!
+  perPage: Int!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
-  sendMessageInput(sendMessageInput: SendMessageInput!): Message!
+  sendMessage(sendMessageInput: SendMessageInput!): Message!
   updateMessage(updateMessageInput: UpdateMessageInput!): Message!
   removeMessage(id: Int!): Message!
   createRoom(createRoomInput: CreateRoomInput!): Room!
@@ -65,7 +92,8 @@ input CreateUserInput {
   firstName: String!
   lastName: String!
   emailId: String!
-  password: String!
+  password: String
+  isSocialLogin: Boolean
 }
 
 input UpdateUserInput {
@@ -73,6 +101,7 @@ input UpdateUserInput {
   lastName: String
   emailId: String
   password: String
+  isSocialLogin: Boolean
   uId: String!
 }
 

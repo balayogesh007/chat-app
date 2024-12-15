@@ -1,21 +1,29 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateRoomInput } from './dto/create-room.input';
 import { UpdateRoomInput } from './dto/update-room.input';
 import { RoomsRepository } from './rooms.repository';
+import { ROOM_NOT_FOUND } from '../../common/error-constants';
 
 @Injectable()
 export class RoomsService {
   constructor(private readonly roomsRepo: RoomsRepository) {}
-  create(createRoomInput: CreateRoomInput) {
+  async createRoom(createRoomInput: CreateRoomInput) {
     return this.roomsRepo.save(createRoomInput);
   }
 
-  findAll() {
-    return `This action returns all rooms`;
+  async getAllRooms(pageNo = 1, perPage = 20) {
+    return this.roomsRepo.getAllRooms(pageNo, perPage);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} room`;
+  async getRoomByRoomId(id: string) {
+    const getRoomDetail = await this.roomsRepo.findOne({
+      where: { rId: id },
+      relations: ['users'],
+    });
+    if (!getRoomDetail?.rId) {
+      throw new NotFoundException(ROOM_NOT_FOUND);
+    }
+    return getRoomDetail;
   }
 
   update(id: number, updateRoomInput: UpdateRoomInput) {

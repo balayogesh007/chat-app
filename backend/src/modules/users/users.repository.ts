@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, ILike, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -14,5 +14,21 @@ export class UsersRepository extends Repository<User> {
       .getOne();
 
     return getUserDetails;
+  }
+
+  async getAllUsers(pageNo: number, perPage: number, searchText: string) {
+    const query = await this.createQueryBuilder('user');
+
+    if (searchText) {
+      query.andWhere({ emailId: ILike(`%${searchText}%`) });
+    }
+    const [users, totalCount] = await query
+      .skip((pageNo - 1) * perPage)
+      .take(perPage)
+      .getManyAndCount();
+    return {
+      totalCount,
+      users,
+    };
   }
 }

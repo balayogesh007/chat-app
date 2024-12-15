@@ -30,9 +30,14 @@ export class User {
   @Column({ name: 'u_email_id', unique: true })
   emailId: string;
 
-  @Field()
-  @Column({ name: 'u_password' })
-  password: string;
+  //Make null for google sign in
+  @Field({ nullable: true })
+  @Column({ name: 'u_password', nullable: true })
+  password?: string;
+
+  @Field({ nullable: true })
+  @Column({ name: 'is_social_login', default: false })
+  isSocialLogin?: boolean;
 
   @Field()
   @Column({ name: 'unique_id', nullable: true })
@@ -40,7 +45,7 @@ export class User {
 
   @Field(() => Message, { nullable: true })
   @OneToMany(() => Message, (message) => message?.user, {
-    cascade: true
+    cascade: true,
   })
   messages: Message[];
 
@@ -48,6 +53,7 @@ export class User {
   @ManyToMany(() => Room, (room) => room?.users)
   rooms?: Room[];
 
+  @Field({ nullable: true })
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamptz',
@@ -55,6 +61,7 @@ export class User {
   })
   createdAt: Date;
 
+  @Field({ nullable: true })
   @UpdateDateColumn({
     name: 'updated_at',
     type: 'timestamptz',
@@ -62,10 +69,10 @@ export class User {
   })
   updatedAt: Date;
 
+  @Field({ nullable: true })
   @CreateDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
-    default: () => 'CURRENT_TIMESTAMP(6)',
     nullable: true,
   })
   deletedAt: Date;

@@ -11,8 +11,11 @@ export class CreateUserInput {
   @Field()
   emailId: string;
 
-  @Field()
-  password: string;
+  @Field({ nullable: true })
+  password?: string;
+
+  @Field({ nullable: true })
+  isSocialLogin?: boolean;
 
   uniqueId?: string;
 }

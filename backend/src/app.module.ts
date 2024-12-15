@@ -10,6 +10,7 @@ import { UsersModule } from './modules/users/users.module';
 import { SocketModule } from './modules/socket/socket.module';
 import { RoomsModule } from './modules/rooms/rooms.module';
 import { MessageModule } from './modules/message/message.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -23,6 +24,7 @@ import { MessageModule } from './modules/message/message.module';
       isGlobal: true,
       load: [dbConfig],
     }),
+    AuthModule,
     DatabaseModule,
     UsersModule,
     SocketModule,
@@ -32,4 +34,4 @@ import { MessageModule } from './modules/message/message.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

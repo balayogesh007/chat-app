@@ -11,8 +11,18 @@ export class MessageService {
     return this.messageRepo.save(sendMessageInput);
   }
 
-  findAll() {
-    return `This action returns all message`;
+  async getMessageByRoomIdAndUserId(
+    roomId: string,
+    userId: string,
+    pageNo = 1,
+    perPage = 20,
+  ) {
+    return this.messageRepo.getMessageByRoomIdAndUserId(
+      roomId,
+      userId,
+      pageNo,
+      perPage,
+    );
   }
 
   findOne(id: number) {

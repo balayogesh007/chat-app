@@ -1,7 +1,6 @@
 import {
   BadRequestException,
   Injectable,
-  Logger,
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
@@ -10,12 +9,17 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { UsersRepository } from './users.repository';
 import * as crypto from 'crypto';
 import * as bcrypt from 'bcrypt';
-import { EMAIL_PWD_REQ, INCORRECT_PWD, USER_NOT_FOUND } from '../../common/error-constants';
+import {
+  EMAIL_PWD_REQ,
+  INCORRECT_PWD,
+  USER_NOT_FOUND,
+} from '../../common/error-constants';
 import * as jwt from 'jsonwebtoken';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly userRepo: UsersRepository) { }
+  constructor(private readonly userRepo: UsersRepository) {}
 
   async passwordHash(password: string) {
     try {
@@ -57,20 +61,22 @@ export class UsersService {
       'rsa',
     );
     return {
-      token: generateToken,
+      token: `Bearer ${generateToken}`,
     };
   }
 
   async create(createUserInput: CreateUserInput) {
-    createUserInput.password = await this.passwordHash(
-      createUserInput?.password,
-    );
+    if (!createUserInput?.isSocialLogin) {
+      createUserInput.password = await this.passwordHash(
+        createUserInput?.password,
+      );
+    }
     createUserInput.uniqueId = crypto.randomBytes(8).toString('hex');
     return this.userRepo.save(createUserInput);
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async getAllUsers(pageNo = 1, perPage = 20, searchText = '') {
+    return this.userRepo.getAllUsers(pageNo, perPage, searchText);
   }
 
   async getUserById(id: string) {
@@ -87,7 +93,7 @@ export class UsersService {
   async updateUser(id: string, updateUserInput: UpdateUserInput) {
     const getuser = await this.getUserById(id);
     if (!getuser?.uId) {
-      throw new NotFoundException(USER_NOT_FOUND)
+      throw new NotFoundException(USER_NOT_FOUND);
     }
     await this.userRepo.update({ uId: id }, { ...updateUserInput });
     return this.getUserById(id);
@@ -97,7 +103,7 @@ export class UsersService {
     return `This action removes a #${id} user`;
   }
 
-  async validateUser(payload: any) {
+  async validateUser(payload: any): Promise<User> {
     let user = null;
     if ('emailId' in payload) {
       user = await this.userRepo.findOneBy({ emailId: payload?.emailId });

@@ -3,24 +3,32 @@ import { RoomsService } from './rooms.service';
 import { Room } from './entities/room.entity';
 import { CreateRoomInput } from './dto/create-room.input';
 import { UpdateRoomInput } from './dto/update-room.input';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../../auth/guards/auth.guard';
+import { GetAllRoomsResponseType } from './dto/rooms.output';
 
 @Resolver(() => Room)
 export class RoomsResolver {
   constructor(private readonly roomsService: RoomsService) {}
 
   @Mutation(() => Room)
-  createRoom(@Args('createRoomInput') createRoomInput: CreateRoomInput) {
-    return this.roomsService.create(createRoomInput);
+  async createRoom(@Args('createRoomInput') createRoomInput: CreateRoomInput) {
+    return this.roomsService.createRoom(createRoomInput);
   }
 
-  @Query(() => [Room], { name: 'rooms' })
-  findAll() {
-    return this.roomsService.findAll();
+  @UseGuards(JwtAuthGuard)
+  @Query(() => GetAllRoomsResponseType)
+  async getAllRooms(
+    @Args('pageNo', { type: () => Int }) pageNo: number,
+    @Args('perPage', { type: () => Int }) perPage: number,
+  ) {
+    return this.roomsService.getAllRooms(pageNo, perPage);
   }
 
-  @Query(() => Room, { name: 'room' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.roomsService.findOne(id);
+  @UseGuards(JwtAuthGuard)
+  @Query(() => Room)
+  async getRoomByRoomId(@Args('id') id: string) {
+    return this.roomsService.getRoomByRoomId(id);
   }
 
   @Mutation(() => Room)

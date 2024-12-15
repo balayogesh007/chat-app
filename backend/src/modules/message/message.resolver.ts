@@ -1,24 +1,36 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { MessageService } from './message.service';
 import { Message } from './entities/message.entity';
-import { CreateMessageInput } from './dto/create-message.input';
 import { UpdateMessageInput } from './dto/update-message.input';
 import { SendMessageInput } from '../socket/dto/create-socket.input';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../../auth/guards/auth.guard';
+import { GetMessageByRoomAndUserIdInput } from './dto/create-message.input';
+import { GetMessagesByRoomAndUserIdRespType } from './dto/messages.output';
 
 @Resolver(() => Message)
+@UseGuards(JwtAuthGuard)
 export class MessageResolver {
   constructor(private readonly messageService: MessageService) {}
 
   @Mutation(() => Message)
-  async sendMessageInput(
+  async sendMessage(
     @Args('sendMessageInput') sendMessageInput: SendMessageInput,
   ) {
     return this.messageService.saveMessage(sendMessageInput);
   }
 
-  @Query(() => [Message], { name: 'message' })
-  findAll() {
-    return this.messageService.findAll();
+  @Query(() => GetMessagesByRoomAndUserIdRespType)
+  async getMessageByRoomIdAndUserId(
+    @Args('getMessageByRoomAndUserIdInput')
+    getMessageByRoomAndUserIdInput: GetMessageByRoomAndUserIdInput,
+  ) {
+    return this.messageService.getMessageByRoomIdAndUserId(
+      getMessageByRoomAndUserIdInput?.roomId,
+      getMessageByRoomAndUserIdInput?.userId,
+      getMessageByRoomAndUserIdInput?.pageNo,
+      getMessageByRoomAndUserIdInput?.perPage,
+    );
   }
 
   @Query(() => Message, { name: 'message' })

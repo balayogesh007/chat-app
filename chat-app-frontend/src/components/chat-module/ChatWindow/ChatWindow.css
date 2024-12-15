@@ -1,52 +1,102 @@
+.parent-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 30% 1fr;
+}
 
-  .chat-container {
-    max-width: 400px;
-    height: 100vh;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: #fff;
-  }
+.sidebar-container {}
 
-  .chat-header {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    font-size: 18px;
-  }
+.side-bar-nav {
+  background-color: #2ad100;
+  color: rgb(0, 0, 0);
+  display: flex;
+  justify-content: center;
+  height: 10%;
+  text-align: center;
+  font-size: 16px;
+}
 
-  .chat-body {
-    height: 80vh;
-    overflow-y: auto;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-bottom: 1px solid #ccc;
-  }
+.chat-container {
+  height: 100vh;
+  border: 1px solid #ccc;
+  overflow: hidden;
+  background-color: #fff;
+}
 
-  .chat-footer {
-    padding: 10px;
-    display: flex;
-    gap: 10px;
-    background-color: #fff;
-  }
+.user-profile-img{
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+.username-section {
+  width: 50%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-left: 20px;
+}
 
-  .chat-footer input {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
+.logout-section {
+  width: 50%;
+  color: #000;
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  margin-right: 5%;
+  align-items: center;
+  cursor: pointer;
+}
 
-  .chat-footer button {
-    padding: 8px 12px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+.chat-header {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 10%;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2ad100;
+  color: white;
+  text-align: center;
+  font-size: 18px;
+  cursor: pointer;
+}
 
-  .chat-footer button:hover {
-    background-color: #0056b3;
-  }
+.chat-body {
+  height: 80vh;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ccc;
+}
+
+.chat-footer {
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  background-color: #fff;
+}
+
+.chat-footer input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.chat-footer button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.chat-footer button:hover {
+  background-color: #0056b3;
+}
+
+.logout-icon{
+  width: 30px;
+  height: 30px;
+}
