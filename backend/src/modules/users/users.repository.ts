@@ -31,4 +31,15 @@ export class UsersRepository extends Repository<User> {
       users,
     };
   }
+
+  async checkUserExist(emailId: string) {
+    const user = await this.createQueryBuilder('user')
+      .where('Lower(user.emailId) = :emailId', { emailId: emailId })
+      .getOne();
+    if (user?.uId) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

@@ -110,4 +110,8 @@ export class UsersService {
     }
     return user;
   }
+
+  async checkUserExist(emailId: string){
+    return this.userRepo.checkUserExist(emailId);
+  }
 }
