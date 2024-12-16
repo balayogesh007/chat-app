@@ -18,3 +18,9 @@ export const SIGN_IN = gql`
         }
     }
 `
+
+export const CHECK_USER = gql`
+    mutation CheckUserExist($emailId: String!){
+        checkUserExist(emailId: $emailId)
+    }
+`
